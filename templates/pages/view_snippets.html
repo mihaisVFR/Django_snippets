@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Begin page content -->
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1>{{ pagename }}</h1>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p>На данной страницы отображаются все созданные сниппеты.</p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <form method="get" action="">
+                <select name="lang">
+                    <option>----</option>
+                    <option value="js" {% if lang == 'js' %} selected {% endif %} >Javascript</option>
+                    <option value="py" {% if lang == 'py' %} selected {% endif %}>Python</option>
+                    <option value="cpp" {% if lang == 'cpp' %} selected {% endif %}>C++</option>
+                </select>
+                <button type="submit">Применить</button>
+                <a href="...">Сбросить</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">
+                        <a href="?sort=name">Название</a>
+                        <i class="fa-solid fa-caret-up"></i>
+                        <i class="fa-solid fa-caret-down"></i>
+                    </th>
+                    <th scope="col">Автор</th>
+                    <th scope="col">Язык</th>
+                    <th scope="col">Дата создания</th>
+                    <th scope="col">Приватный</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for snippet in snippets %}
+                    <tr>
+                        <td scope="row">{{ snippet.id }}</td>
+                        <td>
+                            <a href="{% url 'snippet-detail' snippet.id %}">{{ snippet.name }}</a>
+                            <a href="{% url 'snippet-delete' snippet.id %}">
+                                <i style="color: red" class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>{{ snippet.user.username }}</td>
+                        <td>{{ snippet.lang }}</td>
+                        <td>{{ snippet.creation_date }}</td>
+                        <td>{{ snippet.private }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div align="right">
+                <i style="color: gray;">Всего сниппетов: 2</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
